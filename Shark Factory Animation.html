@@ -4,278 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factory Animation: Final Assembly Stages (Corrected)</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f4f8;
-            margin: 0;
-            font-family: 'Montserrat', sans-serif;
-        }
-        .animation-title {
-            font-size: 1.6rem;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        .animation-container {
-            width: 95%;
-            max-width: 1200px; 
-            background-color: #FFFFFF;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
-            padding: 20px;
-        }
-        svg {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        /* Basic Styling */
-        .department-area {
-            fill: #e9ecef; 
-            stroke: #ced4da;
-            stroke-width: 1px;
-            rx: 6px; 
-        }
-        .department-label {
-            font-size: 8px; 
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600; 
-            fill: #343a40; 
-            text-anchor: middle;
-        }
-        .conveyor-belt {
-            fill: #adb5bd; 
-            rx: 2px;
-        }
-        .conveyor-lines {
-            stroke: #dee2e6; 
-            stroke-dasharray: 2, 2;
-            animation: conveyorLinesMove 0.5s linear infinite;
-        }
-        .vertical-conveyor-lines { 
-            stroke: #dee2e6;
-            stroke-dasharray: 2, 2;
-            animation: conveyorLinesMoveVertical 0.5s linear infinite;
-        }
-        
-        /* Wood Line Specific Shapes & Colors */
-        .raw-wood-square { fill: #A16207; }
-        .processed-wood-triangle { fill: #D4A373; stroke: #A16207; stroke-width: 0.5; }
-        .sanded-neck-assembly-triangle { fill: #E6B88A; stroke: #D4A373; stroke-width: 0.5; } 
-        .painted-neck-assembly-triangle { fill: #A02128; stroke: #7E292C; stroke-width: 0.5; } 
-        .polished-neck-assembly-triangle { fill: #e76f51; stroke: #A02128; stroke-width: 0.5; } 
-
-
-        /* Metal Line Specific Shapes & Colors */
-        .raw-metal-square { fill: #6B7280; }
-        .metal-spine-rect { fill: #CED4DA; stroke: #6B7280; stroke-width: 0.5px; } 
-        .processed-metal-hardware-triangle { fill: #ADB5BD; stroke: #6B7280; stroke-width: 1; } 
-        .finished-metal-hardware-triangle { fill: #E9ECEF; stroke: #ADB5BD; stroke-width: 1; } 
-
-        /* Electronics Line Specific Shapes & Colors */
-        .raw-electronics-components circle { fill: #4CAF50; stroke: #2E7D32; stroke-width: 0.2px;}
-        .raw-electronics-components rect { fill: #2196F3; stroke: #0D47A1; stroke-width: 0.2px;}
-        .assembled-electronics-module { fill: #212529; stroke: #000000; stroke-width: 0.5px; }
-
-        /* Final Product & QA */
-        .finished-guitar-silhouette { fill: #BB854B; stroke: #010101; stroke-width:0.5px; }
-        .qa-pass-indicator { fill: #22C55E; /* Green */ animation: qaPulse 1.5s ease-in-out 3; /* Pulse 3 times, slower */ opacity: 0; }
-
-
-        @keyframes conveyorLinesMove { to { stroke-dashoffset: -4; } }
-        @keyframes conveyorLinesMoveVertical { to { stroke-dashoffset: -4; } }
-        @keyframes qaPulse {
-            0%, 100% { r: 0; opacity: 0; } 
-            10%, 90% { r: 3; opacity: 0.7; }
-            50% { r: 5; opacity: 1; }
-        }
-
-
-        /* --- Wood Processing Line Animations --- */
-        /* Total animation duration: 30s */
-        /* Conveyor Y for wood line: 85px (top of piece) */
-        /* Overhead feedback conveyor Y: 15px (top of piece) */
-        /* Polishing department conveyor Y: 185px (top of piece) */
-
-        .raw-wood-square-1 { animation: rawWoodFlow 30s linear infinite 0s; }
-        .raw-wood-square-2 { animation: rawWoodFlow 30s linear infinite 6s; } 
-        .raw-wood-square-3 { animation: rawWoodFlow 30s linear infinite 12s; }
-        @keyframes rawWoodFlow { 
-            0% { transform: translate(30px, 85px); opacity: 0; } 
-            1% { transform: translate(30px, 85px); opacity: 1; } 
-            8% { transform: translate(190px, 85px); opacity: 1; } 
-            9% { opacity: 0; transform: translate(190px, 85px); } 
-            100% { opacity: 0; transform: translate(190px, 85px); } 
-        }
-
-        .processed-wood-triangle-1 { animation: processedWoodToSanding 30s linear infinite 0s; }
-        .processed-wood-triangle-2 { animation: processedWoodToSanding 30s linear infinite 6s; }
-        .processed-wood-triangle-3 { animation: processedWoodToSanding 30s linear infinite 12s; }
-        @keyframes processedWoodToSanding { 
-            0%    { transform: translate(290px, 85px); opacity: 0; } 
-            9%   { transform: translate(290px, 85px); opacity: 0; } 
-            10%   { transform: translate(290px, 85px); opacity: 1; } 
-            16%   { transform: translate(340px, 85px); opacity: 1; } /* Aligned for spine */
-            /* Spine joins and both travel to sanding */
-            25%   { transform: translate(450px, 85px); opacity: 1; } 
-            27%   { opacity: 0; transform: translate(450px, 85px); } 
-            100%  { opacity: 0; transform: translate(450px, 85px); } 
-        }
-        
-        .sanded-neck-assembly-triangle-1 { animation: sandedWoodToPainting 30s linear infinite 0s; }
-        .sanded-neck-assembly-triangle-2 { animation: sandedWoodToPainting 30s linear infinite 6s; }
-        .sanded-neck-assembly-triangle-3 { animation: sandedWoodToPainting 30s linear infinite 12s; }
-        @keyframes sandedWoodToPainting { 
-            0% { transform: translate(550px, 85px); opacity: 0; }
-            27% { transform: translate(550px, 85px); opacity: 0; }
-            29% { transform: translate(550px, 85px); opacity: 1; } 
-            38% { transform: translate(690px, 85px); opacity: 1; } 
-            40% { opacity: 0; transform: translate(690px, 85px); }
-            100% { opacity: 0; transform: translate(690px, 85px); }
-        }
-
-        .painted-neck-assembly-triangle-1 { animation: paintedWoodToPolishingDept 30s linear infinite 0s; }
-        .painted-neck-assembly-triangle-2 { animation: paintedWoodToPolishingDept 30s linear infinite 6s; }
-        .painted-neck-assembly-triangle-3 { animation: paintedWoodToPolishingDept 30s linear infinite 12s; }
-        @keyframes paintedWoodToPolishingDept { 
-            0%    { transform: translate(790px, 85px); opacity: 0; } 
-            40%   { transform: translate(790px, 85px); opacity: 0; }
-            42%   { transform: translate(790px, 85px); opacity: 1; } 
-            46%   { transform: translate(790px, 15px); opacity: 1; } /* Up North belt (higher) */
-            56%   { transform: translate(510px, 15px); opacity: 1; } /* Left on East belt (triangle x=510 for center) */
-            60%   { transform: translate(510px, 185px); opacity: 1; } /* Down South belt to Polishing input (y=185) */
-            62%   { opacity: 0; transform: translate(510px, 185px); } 
-            100%  { opacity: 0; transform: translate(510px, 185px); }
-        }
-
-        .polished-neck-assembly-triangle-1 { animation: polishedNeckToAssembly 30s linear infinite 0s; }
-        .polished-neck-assembly-triangle-2 { animation: polishedNeckToAssembly 30s linear infinite 6s; }
-        .polished-neck-assembly-triangle-3 { animation: polishedNeckToAssembly 30s linear infinite 12s; }
-        @keyframes polishedNeckToAssembly { 
-            0% { transform: translate(620px, 185px); opacity: 0; } 
-            62% { transform: translate(620px, 185px); opacity: 0; } 
-            64% { transform: translate(620px, 185px); opacity: 1; } 
-            70% { transform: translate(620px, 285px); opacity: 1; } 
-            74% { transform: translate(690px, 285px); opacity: 1; } 
-            76% { opacity: 0; transform: translate(690px, 285px); }
-            100% { opacity: 0; transform: translate(690px, 285px); }
-        }
-
-
-        /* --- Metal Processing Line Animations --- */
-        .raw-metal-square-1 { animation: rawMetalFlowNewY 30s linear infinite 0.5s; }
-        .raw-metal-square-2 { animation: rawMetalFlowNewY 30s linear infinite 6.5s; }
-        .raw-metal-square-3 { animation: rawMetalFlowNewY 30s linear infinite 12.5s; }
-        @keyframes rawMetalFlowNewY { 
-            0% { transform: translate(30px, 285px); opacity: 0; } 
-            1% { transform: translate(30px, 285px); opacity: 1; } 
-            10% { transform: translate(190px, 285px); opacity: 1; } 
-            12% { opacity: 0; transform: translate(190px, 285px); } 
-            100% { opacity: 0; transform: translate(190px, 285px); } 
-        }
-
-        .metal-spine-rect-1 { animation: metalSpineJoinsWood 30s linear infinite 0.5s; }
-        .metal-spine-rect-2 { animation: metalSpineJoinsWood 30s linear infinite 6.5s; }
-        .metal-spine-rect-3 { animation: metalSpineJoinsWood 30s linear infinite 12.5s; }
-        @keyframes metalSpineJoinsWood { 
-            0%    { transform: translate(290px, 285px); opacity: 0; } 
-            12%   { transform: translate(290px, 285px); opacity: 0; }
-            14%   { transform: translate(290px, 285px); opacity: 1; } 
-            18%   { transform: translate(352.5px, 285px); opacity: 1; } 
-            23%   { transform: translate(352.5px, 85px); opacity: 1; }  
-            25%   { transform: translate(450px, 85px); opacity: 1; } /* Travels with wood triangle into sanding */
-            27%   { opacity: 0; transform: translate(450px, 85px); }  
-            100%  { opacity: 0; transform: translate(450px, 85px); }
-        }
-
-        .processed-metal-hardware-triangle-1 { animation: processedMetalToSurfaceNewY 30s linear infinite 1s; }
-        .processed-metal-hardware-triangle-2 { animation: processedMetalToSurfaceNewY 30s linear infinite 7s; }
-        .processed-metal-hardware-triangle-3 { animation: processedMetalToSurfaceNewY 30s linear infinite 13s; }
-        @keyframes processedMetalToSurfaceNewY { 
-            0% { transform: translate(290px, 285px); opacity: 0; } 
-            12% { transform: translate(290px, 285px); opacity: 0; } 
-            15% { transform: translate(290px, 285px); opacity: 1; } 
-            25% { transform: translate(450px, 285px); opacity: 1; } 
-            27% { opacity: 0; transform: translate(450px, 285px); } 
-            100% { opacity: 0; transform: translate(450px, 285px); } 
-        }
-        
-        .finished-metal-hardware-triangle-1 { animation: finishedMetalToAssemblyNewY 30s linear infinite 1s; }
-        .finished-metal-hardware-triangle-2 { animation: finishedMetalToAssemblyNewY 30s linear infinite 7s; }
-        .finished-metal-hardware-triangle-3 { animation: finishedMetalToAssemblyNewY 30s linear infinite 13s; }
-        @keyframes finishedMetalToAssemblyNewY { 
-            0% { transform: translate(550px, 285px); opacity: 0; }
-            27% { transform: translate(550px, 285px); opacity: 0; }
-            29% { transform: translate(550px, 285px); opacity: 1; } 
-            40% { transform: translate(690px, 285px); opacity: 1; } 
-            42% { opacity: 0; transform: translate(690px, 285px); }
-            100% { opacity: 0; transform: translate(690px, 285px); }
-        }
-
-        /* --- Electronics Line Animations --- */
-        .raw-electronics-components-1 { animation: rawElectronicsFlow 30s linear infinite 1.5s; }
-        .raw-electronics-components-2 { animation: rawElectronicsFlow 30s linear infinite 7.5s; }
-        .raw-electronics-components-3 { animation: rawElectronicsFlow 30s linear infinite 13.5s; }
-        @keyframes rawElectronicsFlow {
-            0% { transform: translate(30px, 405px); opacity: 0; }
-            1% { transform: translate(30px, 405px); opacity: 1; }
-            10% { transform: translate(190px, 405px); opacity: 1; } 
-            12% { opacity: 0; transform: translate(190px, 405px); }
-            100% { opacity: 0; transform: translate(190px, 405px); }
-        }
-
-        .assembled-electronics-module-1 { animation: assembledElectronicsToAssembly 30s linear infinite 1.5s; }
-        .assembled-electronics-module-2 { animation: assembledElectronicsToAssembly 30s linear infinite 7.5s; }
-        .assembled-electronics-module-3 { animation: assembledElectronicsToAssembly 30s linear infinite 13.5s; }
-        @keyframes assembledElectronicsToAssembly {
-            0% { transform: translate(290px, 405px); opacity: 0; } 
-            12% { transform: translate(290px, 405px); opacity: 0; }
-            14% { transform: translate(290px, 405px); opacity: 1; } 
-            25% { transform: translate(440px, 405px); opacity: 1; } /* Centered on vertical belt (450-10) */
-            32% { transform: translate(440px, 285px); opacity: 1; } 
-            38% { transform: translate(690px, 285px); opacity: 1; } 
-            40% { opacity: 0; transform: translate(690px, 285px); } 
-            100% { opacity: 0; transform: translate(690px, 285px); }
-        }
-        
-        .finished-guitar-silhouette-1 { animation: finalGuitarFlow 30s linear infinite 0s; }
-        .finished-guitar-silhouette-2 { animation: finalGuitarFlow 30s linear infinite 7s; } 
-        .finished-guitar-silhouette-3 { animation: finalGuitarFlow 30s linear infinite 14s; }
-        @keyframes finalGuitarFlow {
-            0%   , 75% { transform: translate(830px, 285px) scale(0.6); opacity: 0; } 
-            77%  { transform: translate(830px, 285px) scale(0.6); opacity: 1; } 
-            85%  { transform: translate(930px, 285px) scale(0.6); opacity: 1; } 
-            87%  { opacity: 0; transform: translate(930px, 285px) scale(0.6); } 
-            100% { opacity: 0; }
-        }
-        .qa-pass-indicator-1 { animation: qaPassAnim 30s linear infinite 0s; }
-        .qa-pass-indicator-2 { animation: qaPassAnim 30s linear infinite 7s; }
-        .qa-pass-indicator-3 { animation: qaPassAnim 30s linear infinite 14s; }
-        @keyframes qaPassAnim {
-            0%, 86% { opacity: 0; r:0; } 
-            87% { opacity: 1; r:3; } 
-            88% { r:5; } 
-            89% { r:3; }
-            90% { r:5; } 
-            91% { r:3; }
-            92% { r:5; } 
-            93% { r:3; }
-            94% { opacity: 0; r:0; } 
-            100%{ opacity: 0; r:0; }
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="animation-title">Shark Guitars Factory Flow: Full Process</div>
     <div class="animation-container">
-        <svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg"> 
+        <svg viewBox="0 0 1200 500" xmlns="http://www.w3.org/2000/svg" aria-labelledby="svgTitle svgDesc"> 
+        <title id="svgTitle">Shark Guitars Factory Flow</title>
+        <desc id="svgDesc">Animation of guitar assembly from raw materials to finished product.</desc>
+        <defs>
+            <rect id="wood-square" width="20" height="20" rx="2"/>
+            <polygon id="triangle" points="0,20 10,0 20,20"/>
+            <rect id="spine-rect" width="5" height="25" rx="1"/>
+            <g id="electronics-component" transform="scale(0.8)">
+                <circle cx="5" cy="5" r="3"/>
+                <rect x="10" y="2" width="6" height="6" rx="1"/>
+            </g>
+            <rect id="electronics-module" width="20" height="12" rx="2"/>
+            <g id="guitar-silhouette">
+                <polygon points="10,0 20,30 0,30" />
+                <rect x="8" y="30" width="4" height="20" />
+            </g>
+            <circle id="qa-indicator" r="0"/>
+        </defs>
 
             <rect x="20" y="85" width="170" height="20" class="conveyor-belt"/> 
             <line x1="20" y1="95" x2="190" y2="95" class="conveyor-lines" stroke-width="2"/>
@@ -313,56 +64,50 @@
             <rect x="455" y="285" width="245" height="20" class="conveyor-belt"/> <line x1="455" y1="295" x2="700" y2="295" class="conveyor-lines" stroke-width="2"/>
 
 
-            <rect class="raw-wood-square-1" width="20" height="20" rx="2"/>
-            <rect class="raw-wood-square-2" width="20" height="20" rx="2"/>
-            <rect class="raw-wood-square-3" width="20" height="20" rx="2"/>
-            <polygon class="processed-wood-triangle-1" points="0,20 10,0 20,20" />
-            <polygon class="processed-wood-triangle-2" points="0,20 10,0 20,20" />
-            <polygon class="processed-wood-triangle-3" points="0,20 10,0 20,20" />
-            <polygon class="sanded-neck-assembly-triangle-1" points="0,20 10,0 20,20" />
-            <polygon class="sanded-neck-assembly-triangle-2" points="0,20 10,0 20,20" />
-            <polygon class="sanded-neck-assembly-triangle-3" points="0,20 10,0 20,20" />
-            <polygon class="painted-neck-assembly-triangle-1" points="0,20 10,0 20,20" />
-            <polygon class="painted-neck-assembly-triangle-2" points="0,20 10,0 20,20" />
-            <polygon class="painted-neck-assembly-triangle-3" points="0,20 10,0 20,20" />
-            <polygon class="polished-neck-assembly-triangle-1" points="0,20 10,0 20,20" />
-            <polygon class="polished-neck-assembly-triangle-2" points="0,20 10,0 20,20" />
-            <polygon class="polished-neck-assembly-triangle-3" points="0,20 10,0 20,20" />
+            <use href="#wood-square" class="raw-wood-square-1"/>
+            <use href="#wood-square" class="raw-wood-square-2"/>
+            <use href="#wood-square" class="raw-wood-square-3"/>
+            <use href="#triangle" class="processed-wood-triangle-1"/>
+            <use href="#triangle" class="processed-wood-triangle-2"/>
+            <use href="#triangle" class="processed-wood-triangle-3"/>
+            <use href="#triangle" class="sanded-neck-assembly-triangle-1"/>
+            <use href="#triangle" class="sanded-neck-assembly-triangle-2"/>
+            <use href="#triangle" class="sanded-neck-assembly-triangle-3"/>
+            <use href="#triangle" class="painted-neck-assembly-triangle-1"/>
+            <use href="#triangle" class="painted-neck-assembly-triangle-2"/>
+            <use href="#triangle" class="painted-neck-assembly-triangle-3"/>
+            <use href="#triangle" class="polished-neck-assembly-triangle-1"/>
+            <use href="#triangle" class="polished-neck-assembly-triangle-2"/>
+            <use href="#triangle" class="polished-neck-assembly-triangle-3"/>
             
-            <rect class="raw-metal-square-1" width="20" height="20" rx="2"/>
-            <rect class="raw-metal-square-2" width="20" height="20" rx="2"/>
-            <rect class="raw-metal-square-3" width="20" height="20" rx="2"/>
-            <polygon class="processed-metal-hardware-triangle-1" points="0,20 10,0 20,20" />
-            <polygon class="processed-metal-hardware-triangle-2" points="0,20 10,0 20,20" />
-            <polygon class="processed-metal-hardware-triangle-3" points="0,20 10,0 20,20" />
-            <polygon class="finished-metal-hardware-triangle-1" points="0,20 10,0 20,20" />
-            <polygon class="finished-metal-hardware-triangle-2" points="0,20 10,0 20,20" />
-            <polygon class="finished-metal-hardware-triangle-3" points="0,20 10,0 20,20" />
-            <rect class="metal-spine-rect-1" width="5" height="25" rx="1"/> 
-            <rect class="metal-spine-rect-2" width="5" height="25" rx="1"/> 
-            <rect class="metal-spine-rect-3" width="5" height="25" rx="1"/> 
+            <use href="#wood-square" class="raw-metal-square-1"/>
+            <use href="#wood-square" class="raw-metal-square-2"/>
+            <use href="#wood-square" class="raw-metal-square-3"/>
+            <use href="#triangle" class="processed-metal-hardware-triangle-1"/>
+            <use href="#triangle" class="processed-metal-hardware-triangle-2"/>
+            <use href="#triangle" class="processed-metal-hardware-triangle-3"/>
+            <use href="#triangle" class="finished-metal-hardware-triangle-1"/>
+            <use href="#triangle" class="finished-metal-hardware-triangle-2"/>
+            <use href="#triangle" class="finished-metal-hardware-triangle-3"/>
+            <use href="#spine-rect" class="metal-spine-rect-1"/> 
+            <use href="#spine-rect" class="metal-spine-rect-2"/> 
+            <use href="#spine-rect" class="metal-spine-rect-3"/> 
 
-            <g class="raw-electronics-components-1" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
-            <g class="raw-electronics-components-2" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
-            <g class="raw-electronics-components-3" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
-            <rect class="assembled-electronics-module-1" width="20" height="12" rx="2"/>
-            <rect class="assembled-electronics-module-2" width="20" height="12" rx="2"/>
-            <rect class="assembled-electronics-module-3" width="20" height="12" rx="2"/>
+            <use href="#electronics-component" class="raw-electronics-components-1"/>
+            <use href="#electronics-component" class="raw-electronics-components-2"/>
+            <use href="#electronics-component" class="raw-electronics-components-3"/>
+            <use href="#electronics-module" class="assembled-electronics-module-1"/>
+            <use href="#electronics-module" class="assembled-electronics-module-2"/>
+            <use href="#electronics-module" class="assembled-electronics-module-3"/>
 
 
-            <g class="finished-guitar-silhouette-1">
-                 <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
-            </g>
-            <g class="finished-guitar-silhouette-2">
-                 <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
-            </g>
-            <g class="finished-guitar-silhouette-3">
-                 <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
-            </g>
+            <use href="#guitar-silhouette" class="finished-guitar-silhouette-1"/>
+            <use href="#guitar-silhouette" class="finished-guitar-silhouette-2"/>
+            <use href="#guitar-silhouette" class="finished-guitar-silhouette-3"/>
             
-            <circle class="qa-pass-indicator-1" cx="1050" cy="295" r="0"/>
-            <circle class="qa-pass-indicator-2" cx="1050" cy="295" r="0"/>
-            <circle class="qa-pass-indicator-3" cx="1050" cy="295" r="0"/>
+            <use href="#qa-indicator" class="qa-pass-indicator-1" x="1050" y="295"/>
+            <use href="#qa-indicator" class="qa-pass-indicator-2" x="1050" y="295"/>
+            <use href="#qa-indicator" class="qa-pass-indicator-3" x="1050" y="295"/>
 
 
             <text x="50" y="25" class="department-label">Raw Wood In</text>
