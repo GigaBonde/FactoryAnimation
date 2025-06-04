@@ -85,7 +85,8 @@
 
         /* Final Product & QA */
         .finished-guitar-silhouette { fill: #BB854B; stroke: #010101; stroke-width:0.5px; }
-        .qa-pass-indicator { fill: #22C55E; /* Green */ animation: qaPulse 1.5s ease-in-out 3; /* Pulse 3 times, slower */ opacity: 0; }
+        .qa-pass-indicator { fill: #22C55E; /* Green */ opacity: 0; } /* Base style, animation applied per instance */
+        .qa-fail-indicator { fill: #EF4444; /* Red-500 */ opacity: 0; } /* Base style for fail indicator */
 
 
         @keyframes conveyorLinesMove { to { stroke-dashoffset: -4; } }
@@ -96,7 +97,43 @@
             50% { r: 5; opacity: 1; }
         }
 
+        /* --- Wood Processing Department Machine Animation --- */
+        /* Applied to the machine icon in Wood Proc. Dept. */
+        /* Pulses briefly when a wood part is being processed. */
+        @keyframes machineBriefPulse {
+            0%, 100% { stroke: #475569; stroke-width: 1.5px; transform: scale(1); } /* Normal state */
+            50% { stroke: #e67e22; stroke-width: 2.5px; transform: scale(1.05); }   /* Active processing style: orange, thicker, slightly larger */
+        }
 
+        .wood-processing-machine-icon {
+            /* Apply the brief pulse animation three times, staggered for each wood part */
+            /* Each pulse lasts 0.6s (2% of 30s total cycle, from wood entering at 8% to processed wood appearing at 10%) */
+            animation-name: machineBriefPulse, machineBriefPulse, machineBriefPulse;
+            animation-duration: 0.6s, 0.6s, 0.6s;
+            animation-iteration-count: 1, 1, 1; /* Run each pulse once */
+            animation-fill-mode: none, none, none; /* Return to base style after each pulse (defined by 0%/100% of keyframe) */
+            /* Delays for each pulse, timed with wood part arrival at Wood Proc. Dept. (8% of 30s = 2.4s) */
+            /* Part 1: starts at 2.4s */
+            /* Part 2: starts at 2.4s + 6s item delay = 8.4s */
+            /* Part 3: starts at 2.4s + 12s item delay = 14.4s */
+            animation-delay: 2.4s, 8.4s, 14.4s;
+        }
+
+        /*
+            NOTE ON SCALABILITY OF PART ANIMATION:
+            The current method of animating multiple identical parts (raw wood, metal pieces, etc.)
+            by duplicating SVG elements and applying staggered CSS animations via separate classes
+            is suitable for a fixed, small number of items as demonstrated in this example.
+
+            For scenarios requiring:
+            - A variable number of parts,
+            - A significantly larger number of parts, or
+            - More complex interactions and state management for each part,
+            a JavaScript-based animation approach would be more scalable and maintainable.
+            JavaScript could dynamically create/remove SVG elements, manage their animation timings
+            (e.g., using the Web Animations API or a library), and handle complex state logic,
+            thereby reducing repetitive HTML and CSS definitions.
+        */
         /* --- Wood Processing Line Animations --- */
         /* Total animation duration: 30s */
         /* Conveyor Y for wood line: 85px (top of piece) */
@@ -107,169 +144,209 @@
         .raw-wood-square-2 { animation: rawWoodFlow 30s linear infinite 6s; } 
         .raw-wood-square-3 { animation: rawWoodFlow 30s linear infinite 12s; }
         @keyframes rawWoodFlow { 
-            0% { transform: translate(30px, 85px); opacity: 0; } 
-            1% { transform: translate(30px, 85px); opacity: 1; } 
-            8% { transform: translate(190px, 85px); opacity: 1; } 
-            9% { opacity: 0; transform: translate(190px, 85px); } 
-            100% { opacity: 0; transform: translate(190px, 85px); } 
+            0% { transform: translate(30px, 85px); opacity: 0; } /* Starts invisible at raw wood input (X=30, Y=85) */
+            1% { transform: translate(30px, 85px); opacity: 1; } /* Becomes visible at raw wood input */
+            8% { transform: translate(190px, 85px); opacity: 1; } /* Moves to Wood Proc. Dept. entrance (X=190) */
+            9% { opacity: 0; transform: translate(190px, 85px); } /* Enters Wood Proc. Dept. (becomes invisible) */
+            100% { opacity: 0; transform: translate(190px, 85px); } /* Stays invisible */
         }
 
         .processed-wood-triangle-1 { animation: processedWoodToSanding 30s linear infinite 0s; }
         .processed-wood-triangle-2 { animation: processedWoodToSanding 30s linear infinite 6s; }
         .processed-wood-triangle-3 { animation: processedWoodToSanding 30s linear infinite 12s; }
         @keyframes processedWoodToSanding { 
-            0%    { transform: translate(290px, 85px); opacity: 0; } 
-            9%   { transform: translate(290px, 85px); opacity: 0; } 
-            10%   { transform: translate(290px, 85px); opacity: 1; } 
-            16%   { transform: translate(340px, 85px); opacity: 1; } /* Aligned for spine */
-            /* Spine joins and both travel to sanding */
-            25%   { transform: translate(450px, 85px); opacity: 1; } 
-            27%   { opacity: 0; transform: translate(450px, 85px); } 
-            100%  { opacity: 0; transform: translate(450px, 85px); } 
+            0%    { transform: translate(290px, 85px); opacity: 0; } /* Starts invisible after Wood Proc. (X=290, Y=85) */
+            9%   { transform: translate(290px, 85px); opacity: 0; } /* Remains invisible, waiting for processing time */
+            10%   { transform: translate(290px, 85px); opacity: 1; } /* Exits Wood Proc. Dept., becomes visible */
+            16%   { transform: translate(340px, 85px); opacity: 1; } /* Moves to Neck Assembly area (X=340) */
+            23%   { transform: translate(340px, 85px); opacity: 1; } /* Waits at X=340 for metal spine to arrive and align. Spine arrives at 23%. */
+            /* Spine joins (now aligned) and both travel to sanding */
+            26%   { transform: translate(450px, 85px); opacity: 1; } /* Moves together with spine to 1st Sanding Dept. entrance (X=450) */
+            27%   { opacity: 0; transform: translate(450px, 85px); } /* Enters 1st Sanding Dept. (becomes invisible) */
+            100%  { opacity: 0; transform: translate(450px, 85px); } /* Stays invisible */
         }
         
         .sanded-neck-assembly-triangle-1 { animation: sandedWoodToPainting 30s linear infinite 0s; }
         .sanded-neck-assembly-triangle-2 { animation: sandedWoodToPainting 30s linear infinite 6s; }
         .sanded-neck-assembly-triangle-3 { animation: sandedWoodToPainting 30s linear infinite 12s; }
         @keyframes sandedWoodToPainting { 
-            0% { transform: translate(550px, 85px); opacity: 0; }
-            27% { transform: translate(550px, 85px); opacity: 0; }
-            29% { transform: translate(550px, 85px); opacity: 1; } 
-            38% { transform: translate(690px, 85px); opacity: 1; } 
-            40% { opacity: 0; transform: translate(690px, 85px); }
-            100% { opacity: 0; transform: translate(690px, 85px); }
+            0% { transform: translate(550px, 85px); opacity: 0; } /* Starts invisible after 1st Sanding (X=550, Y=85) */
+            27% { transform: translate(550px, 85px); opacity: 0; } /* Remains invisible, waiting for sanding time */
+            29% { transform: translate(550px, 85px); opacity: 1; } /* Exits 1st Sanding Dept., becomes visible */
+            38% { transform: translate(690px, 85px); opacity: 1; } /* Moves to Painting Dept. entrance (X=690) */
+            40% { opacity: 0; transform: translate(690px, 85px); } /* Enters Painting Dept. (becomes invisible) */
+            100% { opacity: 0; transform: translate(690px, 85px); } /* Stays invisible */
         }
 
         .painted-neck-assembly-triangle-1 { animation: paintedWoodToPolishingDept 30s linear infinite 0s; }
         .painted-neck-assembly-triangle-2 { animation: paintedWoodToPolishingDept 30s linear infinite 6s; }
         .painted-neck-assembly-triangle-3 { animation: paintedWoodToPolishingDept 30s linear infinite 12s; }
         @keyframes paintedWoodToPolishingDept { 
-            0%    { transform: translate(790px, 85px); opacity: 0; } 
-            40%   { transform: translate(790px, 85px); opacity: 0; }
-            42%   { transform: translate(790px, 85px); opacity: 1; } 
-            46%   { transform: translate(790px, 15px); opacity: 1; } /* Up North belt (higher) */
-            56%   { transform: translate(510px, 15px); opacity: 1; } /* Left on East belt (triangle x=510 for center) */
-            60%   { transform: translate(510px, 185px); opacity: 1; } /* Down South belt to Polishing input (y=185) */
-            62%   { opacity: 0; transform: translate(510px, 185px); } 
-            100%  { opacity: 0; transform: translate(510px, 185px); }
+            0%    { transform: translate(790px, 85px); opacity: 0; } /* Starts invisible after Painting (X=790, Y=85) */
+            40%   { transform: translate(790px, 85px); opacity: 0; } /* Remains invisible, waiting for painting time */
+            42%   { transform: translate(790px, 85px); opacity: 1; } /* Exits Painting Dept., becomes visible */
+            46%   { transform: translate(790px, 15px); opacity: 1; } /* Moves up to overhead conveyor (Y=15) at X=790 */
+            56%   { transform: translate(510px, 15px); opacity: 1; } /* Travels left on overhead conveyor to X=510 (aligns with Polishing Dept. vertical conveyor) */
+            60%   { transform: translate(510px, 185px); opacity: 1; } /* Moves down vertical conveyor to Polishing Dept. input (Y=185) */
+            62%   { opacity: 0; transform: translate(510px, 185px); } /* Enters Polishing Dept. (becomes invisible) */
+            100%  { opacity: 0; transform: translate(510px, 185px); } /* Stays invisible */
         }
 
         .polished-neck-assembly-triangle-1 { animation: polishedNeckToAssembly 30s linear infinite 0s; }
         .polished-neck-assembly-triangle-2 { animation: polishedNeckToAssembly 30s linear infinite 6s; }
         .polished-neck-assembly-triangle-3 { animation: polishedNeckToAssembly 30s linear infinite 12s; }
         @keyframes polishedNeckToAssembly { 
-            0% { transform: translate(620px, 185px); opacity: 0; } 
-            62% { transform: translate(620px, 185px); opacity: 0; } 
-            64% { transform: translate(620px, 185px); opacity: 1; } 
-            70% { transform: translate(620px, 285px); opacity: 1; } 
-            74% { transform: translate(690px, 285px); opacity: 1; } 
-            76% { opacity: 0; transform: translate(690px, 285px); }
-            100% { opacity: 0; transform: translate(690px, 285px); }
+            0% { transform: translate(620px, 185px); opacity: 0; } /* Starts invisible after Polishing (X=620, Y=185) */
+            62% { transform: translate(620px, 185px); opacity: 0; } /* Remains invisible, waiting for polishing time */
+            64% { transform: translate(620px, 185px); opacity: 1; } /* Exits Polishing Dept., becomes visible */
+            70% { transform: translate(620px, 285px); opacity: 1; } /* Moves down vertical conveyor to Main Assembly line level (Y=285) at X=620 */
+            74% { transform: translate(690px, 285px); opacity: 1; } /* Moves to previous Main Assembly Dept. input for necks (X=690) */
+            /* MODIFIED: Extended travel to common assembly point X=830 */
+            82% { transform: translate(830px, 285px); opacity: 1; } /* Arrives at Main Assembly point X=830 (travel 140px from 690px, took 8%) */
+            83% { opacity: 0; transform: translate(830px, 285px); } /* Neck is part of main assembly (becomes invisible at X=830) */
+            100% { opacity: 0; transform: translate(830px, 285px); } /* Stays invisible */
         }
 
 
         /* --- Metal Processing Line Animations --- */
+        /* Conveyor Y for metal line: 285px */
         .raw-metal-square-1 { animation: rawMetalFlowNewY 30s linear infinite 0.5s; }
         .raw-metal-square-2 { animation: rawMetalFlowNewY 30s linear infinite 6.5s; }
         .raw-metal-square-3 { animation: rawMetalFlowNewY 30s linear infinite 12.5s; }
         @keyframes rawMetalFlowNewY { 
-            0% { transform: translate(30px, 285px); opacity: 0; } 
-            1% { transform: translate(30px, 285px); opacity: 1; } 
-            10% { transform: translate(190px, 285px); opacity: 1; } 
-            12% { opacity: 0; transform: translate(190px, 285px); } 
-            100% { opacity: 0; transform: translate(190px, 285px); } 
+            0% { transform: translate(30px, 285px); opacity: 0; } /* Starts invisible at raw metal input (X=30, Y=285) */
+            1% { transform: translate(30px, 285px); opacity: 1; } /* Becomes visible at raw metal input */
+            10% { transform: translate(190px, 285px); opacity: 1; } /* Moves to Metal Proc. Dept. entrance (X=190) */
+            12% { opacity: 0; transform: translate(190px, 285px); } /* Enters Metal Proc. Dept. (becomes invisible) */
+            100% { opacity: 0; transform: translate(190px, 285px); } /* Stays invisible */
         }
 
         .metal-spine-rect-1 { animation: metalSpineJoinsWood 30s linear infinite 0.5s; }
         .metal-spine-rect-2 { animation: metalSpineJoinsWood 30s linear infinite 6.5s; }
         .metal-spine-rect-3 { animation: metalSpineJoinsWood 30s linear infinite 12.5s; }
         @keyframes metalSpineJoinsWood { 
-            0%    { transform: translate(290px, 285px); opacity: 0; } 
-            12%   { transform: translate(290px, 285px); opacity: 0; }
-            14%   { transform: translate(290px, 285px); opacity: 1; } 
-            18%   { transform: translate(352.5px, 285px); opacity: 1; } 
-            23%   { transform: translate(352.5px, 85px); opacity: 1; }  
-            25%   { transform: translate(450px, 85px); opacity: 1; } /* Travels with wood triangle into sanding */
-            27%   { opacity: 0; transform: translate(450px, 85px); }  
-            100%  { opacity: 0; transform: translate(450px, 85px); }
+            0%    { transform: translate(290px, 285px); opacity: 0; } /* Starts invisible after Metal Proc. (X=290, Y=285) */
+            12%   { transform: translate(290px, 285px); opacity: 0; } /* Remains invisible, waiting for processing time */
+            14%   { transform: translate(290px, 285px); opacity: 1; } /* Exits Metal Proc. Dept. (as metal spine), becomes visible */
+            18%   { transform: translate(347.5px, 285px); opacity: 1; } /* SYNC: Moves to vertical conveyor base, X adjusted to 347.5px for centering with wood (wood X=340, width 20; spine width 5. 340 + 10 - 2.5 = 347.5) */
+            23%   { transform: translate(347.5px, 85px); opacity: 1; }  /* SYNC: Moves up vertical conveyor to Wood Line level (Y=85), aligned with wood triangle at X=347.5. Wood waits at X=340. */
+            /* Wood ('processedWoodToSanding') is now at X=340, Y=85. Spine is at X=347.5, Y=85. They are aligned side-by-side/slotted. */
+            26%   { transform: translate(450px, 85px); opacity: 1; } /* SYNC: Travels together with wood triangle into 1st Sanding Dept. entrance (X=450) */
+            27%   { opacity: 0; transform: translate(450px, 85px); }  /* Enters 1st Sanding Dept. with wood (becomes invisible) */
+            100%  { opacity: 0; transform: translate(450px, 85px); } /* Stays invisible */
         }
 
+        /* This animation is for other metal hardware, not the spine that joins the wood. */
         .processed-metal-hardware-triangle-1 { animation: processedMetalToSurfaceNewY 30s linear infinite 1s; }
         .processed-metal-hardware-triangle-2 { animation: processedMetalToSurfaceNewY 30s linear infinite 7s; }
         .processed-metal-hardware-triangle-3 { animation: processedMetalToSurfaceNewY 30s linear infinite 13s; }
         @keyframes processedMetalToSurfaceNewY { 
-            0% { transform: translate(290px, 285px); opacity: 0; } 
-            12% { transform: translate(290px, 285px); opacity: 0; } 
-            15% { transform: translate(290px, 285px); opacity: 1; } 
-            25% { transform: translate(450px, 285px); opacity: 1; } 
-            27% { opacity: 0; transform: translate(450px, 285px); } 
-            100% { opacity: 0; transform: translate(450px, 285px); } 
+            0% { transform: translate(290px, 285px); opacity: 0; } /* Starts invisible after Metal Proc. (X=290, Y=285) */
+            12% { transform: translate(290px, 285px); opacity: 0; } /* Remains invisible, waiting for processing time (slightly different from spine) */
+            15% { transform: translate(290px, 285px); opacity: 1; } /* Exits Metal Proc. Dept., becomes visible */
+            25% { transform: translate(450px, 285px); opacity: 1; } /* Moves to Surface Proc. & Anodizing Dept. entrance (X=450) */
+            27% { opacity: 0; transform: translate(450px, 285px); } /* Enters Surface Proc. Dept. (becomes invisible) */
+            100% { opacity: 0; transform: translate(450px, 285px); } /* Stays invisible */
         }
         
         .finished-metal-hardware-triangle-1 { animation: finishedMetalToAssemblyNewY 30s linear infinite 1s; }
         .finished-metal-hardware-triangle-2 { animation: finishedMetalToAssemblyNewY 30s linear infinite 7s; }
         .finished-metal-hardware-triangle-3 { animation: finishedMetalToAssemblyNewY 30s linear infinite 13s; }
         @keyframes finishedMetalToAssemblyNewY { 
-            0% { transform: translate(550px, 285px); opacity: 0; }
-            27% { transform: translate(550px, 285px); opacity: 0; }
-            29% { transform: translate(550px, 285px); opacity: 1; } 
-            40% { transform: translate(690px, 285px); opacity: 1; } 
-            42% { opacity: 0; transform: translate(690px, 285px); }
-            100% { opacity: 0; transform: translate(690px, 285px); }
+            0% { transform: translate(550px, 285px); opacity: 0; } /* Starts invisible after Surface Proc. (X=550, Y=285) */
+            27% { transform: translate(550px, 285px); opacity: 0; } /* Remains invisible, waiting for surface processing time */
+            29% { transform: translate(550px, 285px); opacity: 1; } /* Exits Surface Proc. Dept., becomes visible */
+            40% { transform: translate(690px, 285px); opacity: 1; } /* Moves to previous Main Assembly Dept. input for metal hardware (X=690) */
+            /* MODIFIED: Extended travel to common assembly point X=830 */
+            51% { transform: translate(830px, 285px); opacity: 1; } /* Arrives at Main Assembly point X=830 (travel 140px from 690px, took 11%) */
+            52% { opacity: 0; transform: translate(830px, 285px); } /* Metal hardware is part of main assembly (becomes invisible at X=830) */
+            100% { opacity: 0; transform: translate(830px, 285px); } /* Stays invisible */
         }
 
         /* --- Electronics Line Animations --- */
+        /* Conveyor Y for electronics line: 405px */
         .raw-electronics-components-1 { animation: rawElectronicsFlow 30s linear infinite 1.5s; }
         .raw-electronics-components-2 { animation: rawElectronicsFlow 30s linear infinite 7.5s; }
         .raw-electronics-components-3 { animation: rawElectronicsFlow 30s linear infinite 13.5s; }
         @keyframes rawElectronicsFlow {
-            0% { transform: translate(30px, 405px); opacity: 0; }
-            1% { transform: translate(30px, 405px); opacity: 1; }
-            10% { transform: translate(190px, 405px); opacity: 1; } 
-            12% { opacity: 0; transform: translate(190px, 405px); }
-            100% { opacity: 0; transform: translate(190px, 405px); }
+            0% { transform: translate(30px, 405px); opacity: 0; } /* Starts invisible at raw electronics input (X=30, Y=405) */
+            1% { transform: translate(30px, 405px); opacity: 1; } /* Becomes visible at raw electronics input */
+            10% { transform: translate(190px, 405px); opacity: 1; } /* Moves to Electronics Assembly Dept. entrance (X=190) */
+            12% { opacity: 0; transform: translate(190px, 405px); } /* Enters Electronics Assembly Dept. (becomes invisible) */
+            100% { opacity: 0; transform: translate(190px, 405px); } /* Stays invisible */
         }
 
         .assembled-electronics-module-1 { animation: assembledElectronicsToAssembly 30s linear infinite 1.5s; }
         .assembled-electronics-module-2 { animation: assembledElectronicsToAssembly 30s linear infinite 7.5s; }
         .assembled-electronics-module-3 { animation: assembledElectronicsToAssembly 30s linear infinite 13.5s; }
         @keyframes assembledElectronicsToAssembly {
-            0% { transform: translate(290px, 405px); opacity: 0; } 
-            12% { transform: translate(290px, 405px); opacity: 0; }
-            14% { transform: translate(290px, 405px); opacity: 1; } 
-            25% { transform: translate(440px, 405px); opacity: 1; } /* Centered on vertical belt (450-10) */
-            32% { transform: translate(440px, 285px); opacity: 1; } 
-            38% { transform: translate(690px, 285px); opacity: 1; } 
-            40% { opacity: 0; transform: translate(690px, 285px); } 
-            100% { opacity: 0; transform: translate(690px, 285px); }
+            0% { transform: translate(290px, 405px); opacity: 0; } /* Starts invisible after Electronics Assembly (X=290, Y=405) */
+            12% { transform: translate(290px, 405px); opacity: 0; } /* Remains invisible, waiting for assembly time */
+            14% { transform: translate(290px, 405px); opacity: 1; } /* Exits Electronics Assembly Dept., becomes visible */
+            25% { transform: translate(440px, 405px); opacity: 1; } /* Moves to vertical conveyor base (X=440, part is 20px wide, conveyor at X=445, so 440 is center of part on conveyor) */
+            32% { transform: translate(440px, 285px); opacity: 1; } /* Moves up vertical conveyor to Main Assembly line level (Y=285) */
+            38% { transform: translate(690px, 285px); opacity: 1; } /* Moves to previous Main Assembly Dept. input for electronics (X=690) */
+            /* MODIFIED: Extended travel to common assembly point X=830 */
+            41.5% { transform: translate(830px, 285px); opacity: 1; } /* Arrives at Main Assembly point X=830 (travel 140px from 690px, took 3.5%) */
+            42.5% { opacity: 0; transform: translate(830px, 285px); } /* Electronics module is part of main assembly (becomes invisible at X=830) */
+            100% { opacity: 0; transform: translate(830px, 285px); } /* Stays invisible */
         }
         
+        /* --- Final Product and QA Animations --- */
         .finished-guitar-silhouette-1 { animation: finalGuitarFlow 30s linear infinite 0s; }
-        .finished-guitar-silhouette-2 { animation: finalGuitarFlow 30s linear infinite 7s; } 
+        /* MODIFIED: Second guitar uses finalGuitarFlowFail animation */
+        .finished-guitar-silhouette-2 { animation: finalGuitarFlowFail 30s linear infinite 7s; }
         .finished-guitar-silhouette-3 { animation: finalGuitarFlow 30s linear infinite 14s; }
         @keyframes finalGuitarFlow {
-            0%   , 75% { transform: translate(830px, 285px) scale(0.6); opacity: 0; } 
-            77%  { transform: translate(830px, 285px) scale(0.6); opacity: 1; } 
-            85%  { transform: translate(930px, 285px) scale(0.6); opacity: 1; } 
-            87%  { opacity: 0; transform: translate(930px, 285px) scale(0.6); } 
-            100% { opacity: 0; }
-        }
-        .qa-pass-indicator-1 { animation: qaPassAnim 30s linear infinite 0s; }
-        .qa-pass-indicator-2 { animation: qaPassAnim 30s linear infinite 7s; }
-        .qa-pass-indicator-3 { animation: qaPassAnim 30s linear infinite 14s; }
-        @keyframes qaPassAnim {
-            0%, 86% { opacity: 0; r:0; } 
-            87% { opacity: 1; r:3; } 
-            88% { r:5; } 
-            89% { r:3; }
-            90% { r:5; } 
-            91% { r:3; }
-            92% { r:5; } 
-            93% { r:3; }
-            94% { opacity: 0; r:0; } 
-            100%{ opacity: 0; r:0; }
+            /* MODIFIED: Guitar appearance delayed until Polished Neck (latest part) arrives at 82% and is processed by 83% */
+            0%   , 82% { transform: translate(830px, 285px) scale(0.6); opacity: 0; } /* Stays invisible until all parts are assembled */
+            83%  { transform: translate(830px, 285px) scale(0.6); opacity: 1; } /* Finished guitar appears at assembly point (X=830) */
+            /* MODIFIED: Adjusted timing for move to QA and disappearance */
+            90%  { transform: translate(930px, 285px) scale(0.6); opacity: 1; } /* Moves to Quality Control Dept. entrance (X=930) */
+            92%  { opacity: 0; transform: translate(930px, 285px) scale(0.6); } /* Enters/clears Quality Control Dept. (becomes invisible) */
+            100% { opacity: 0; } /* Stays invisible */
         }
 
+        /* Animation for guitars that FAIL QA */
+        @keyframes finalGuitarFlowFail {
+            0%   , 82% { transform: translate(830px, 285px) scale(0.6); opacity: 0; } /* Stays invisible until all parts are assembled */
+            83%  { transform: translate(830px, 285px) scale(0.6); opacity: 1; } /* Finished guitar appears at assembly point (X=830) */
+            90%  { transform: translate(930px, 285px) scale(0.6); opacity: 1; } /* Moves to Quality Control Dept. entrance (X=930) */
+            /* MODIFIED FOR QA FAIL: Guitar fades out at QA station */
+            92%  { transform: translate(930px, 285px) scale(0.6); opacity: 0; } /* Fades out AT QA station */
+            100% { transform: translate(930px, 285px) scale(0.6); opacity: 0; } /* Stays faded at QA station */
+        }
+
+        .qa-pass-indicator-1 { animation: qaPassAnim 30s linear infinite 0s; }
+        /* MODIFIED: Second guitar's pass indicator is disabled */
+        .qa-pass-indicator-2 { animation: none; opacity: 0; }
+        .qa-pass-indicator-3 { animation: qaPassAnim 30s linear infinite 14s; }
+        @keyframes qaPassAnim {
+            /* MODIFIED: QA pulse timing adjusted to new guitar timing at QA station (approx 90% to 92%) */
+            0%, 90.5% { opacity: 0; r:0; }      /* Indicator invisible until guitar is at QA station */
+            91%    { opacity: 1; r:3; }      /* QA check starts: Indicator appears, small radius */
+            91.2%  { r:5; }                  /* Pulse bigger */
+            91.4%  { r:3; }                  /* Pulse smaller */
+            91.6%  { r:5; }                  /* Pulse bigger */
+            91.8%  { r:3; }                  /* Pulse smaller, final part of pulse */
+            92%    { opacity: 0; r:0; }      /* QA check ends: Indicator disappears as guitar leaves/finishes QA */
+            100%   { opacity: 0; r:0; }      /* Stays invisible */
+        }
+
+        /* Animation for QA Fail indicator pulse */
+        .qa-fail-indicator-2 { animation: qaFailPulseAnim 30s linear infinite 7s; }
+        @keyframes qaFailPulseAnim {
+            /* Timed to activate when the second guitar (failed one) is at QA station */
+            /* Guitar is at QA from 90% to 92% in its 'finalGuitarFlowFail' animation */
+            0%, 90.5% { opacity: 0; r:0; }      /* Indicator invisible */
+            91%    { opacity: 1; r:3; }      /* Fail pulse starts */
+            91.2%  { r:5; }
+            91.4%  { r:3; }
+            91.6%  { r:5; }
+            91.8%  { r:3; }
+            92%    { opacity: 0; r:0; }      /* Fail pulse ends as guitar fades */
+            100%   { opacity: 0; r:0; }
+        }
     </style>
 </head>
 <body>
@@ -312,7 +389,26 @@
             <line x1="455" y1="305" x2="455" y2="405" class="vertical-conveyor-lines" stroke-width="2"/>
             <rect x="455" y="285" width="245" height="20" class="conveyor-belt"/> <line x1="455" y1="295" x2="700" y2="295" class="conveyor-lines" stroke-width="2"/>
 
+            <!--
+                ANIMATED FACTORY PARTS:
+                The following SVG elements represent the various parts moving through the factory.
+                To simulate multiple instances of the same part type (e.g., raw wood squares, metal hardware),
+                the SVG elements are duplicated (e.g., raw-wood-square-1, raw-wood-square-2, raw-wood-square-3).
 
+                Staggered animation for these duplicated parts is achieved by:
+                1. Defining a base CSS animation (e.g., @keyframes rawWoodFlow).
+                2. Applying this animation to each SVG element instance via a unique class.
+                3. Assigning a different 'animation-delay' in the CSS rule for each instance's class
+                   (e.g., .raw-wood-square-1 { animation: rawWoodFlow ... 0s; },
+                           .raw-wood-square-2 { animation: rawWoodFlow ... 6s; }, etc.).
+
+                HOW TO ADD MORE PARTS OF THE SAME TYPE (e.g., a fourth raw wood square):
+                1. Add a new SVG element in this section, incrementing the class name:
+                   <rect class="raw-wood-square-4" width="20" height="20" rx="2"/>
+                2. Add a corresponding CSS rule in the <style> section, applying the same base animation
+                   but with an increased 'animation-delay' (e.g., previous delay + 6s for a 6-second stagger):
+                   .raw-wood-square-4 { animation: rawWoodFlow 30s linear infinite 18s; }
+            -->
             <rect class="raw-wood-square-1" width="20" height="20" rx="2"/>
             <rect class="raw-wood-square-2" width="20" height="20" rx="2"/>
             <rect class="raw-wood-square-3" width="20" height="20" rx="2"/>
@@ -361,15 +457,16 @@
             </g>
             
             <circle class="qa-pass-indicator-1" cx="1050" cy="295" r="0"/>
-            <circle class="qa-pass-indicator-2" cx="1050" cy="295" r="0"/>
+            <circle class="qa-pass-indicator-2" cx="1050" cy="295" r="0"/> <!-- Pass indicator for 2nd guitar, now disabled in CSS -->
+            <circle class="qa-fail-indicator qa-fail-indicator-2" cx="1050" cy="280" r="0"/> <!-- Fail indicator for 2nd guitar, positioned slightly above -->
             <circle class="qa-pass-indicator-3" cx="1050" cy="295" r="0"/>
 
 
             <text x="50" y="25" class="department-label">Raw Wood In</text>
             <rect x="180" y="60" width="140" height="60" class="department-area"/>
             <text x="250" y="52" class="department-label">Wood Proc. Dept.</text>
-            <circle cx="250" cy="90" r="15" fill="none" stroke="#475569" stroke-width="1.5"/>
-            <line x1="250" y1="75" x2="250" y2="105" stroke="#475569" stroke-width="1.5"/>
+            <circle class="wood-processing-machine-icon" cx="250" cy="90" r="15" fill="none" stroke="#475569" stroke-width="1.5"/>
+            <line class="wood-processing-machine-icon" x1="250" y1="75" x2="250" y2="105" stroke="#475569" stroke-width="1.5"/>
 
             <text x="370" y="70" class="department-label" font-size="7">Neck Assembly</text> 
 
