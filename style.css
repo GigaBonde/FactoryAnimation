@@ -222,11 +222,12 @@ svg {
 .finished-guitar-silhouette-2 { animation: finalGuitarFlow 30s linear infinite 7s; } 
 .finished-guitar-silhouette-3 { animation: finalGuitarFlow 30s linear infinite 14s; }
 @keyframes finalGuitarFlow {
-    0%   , 75% { transform: translate(830px, 285px) scale(0.6); opacity: 0; } 
-    77%  { transform: translate(830px, 285px) scale(0.6); opacity: 1; } 
-    85%  { transform: translate(930px, 285px) scale(0.6); opacity: 1; } 
-    87%  { opacity: 0; transform: translate(930px, 285px) scale(0.6); } 
-    100% { opacity: 0; }
+    0%, 75% { transform: translate(830px, 285px) scale(0.6); opacity: 0; }
+    77% { transform: translate(830px, 285px) scale(0.6); opacity: 1; }
+    85% { transform: translate(930px, 285px) scale(0.6); opacity: 1; }
+    92% { transform: translate(1050px, 285px) scale(0.6); opacity: 1; }
+    97% { transform: translate(1130px, 285px) scale(0.6); opacity: 1; }
+    100% { opacity: 0; transform: translate(1130px, 285px) scale(0.6); }
 }
 .qa-pass-indicator-1 { animation: qaPassAnim 30s linear infinite 0s; }
 .qa-pass-indicator-2 { animation: qaPassAnim 30s linear infinite 7s; }
