@@ -1,23 +1,33 @@
+:root {
+    --beige: #CEA67D;
+    --light-brown: #BB854B;
+    --black: #010101;
+    --deep-red: #A02128;
+    --white: #FFFFFF;
+}
+
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f4f8;
+    background-color: var(--black);
     margin: 0;
     font-family: 'Montserrat', sans-serif;
 }
 .animation-title {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #333;
+    color: var(--beige);
     margin-bottom: 1.25rem;
+    text-transform: uppercase;
+    text-align: center;
 }
 .animation-container {
     width: 95%;
-    max-width: 75rem; 
-    background-color: #FFFFFF;
+    max-width: 75rem;
+    background-color: var(--white);
     border-radius: 0.625rem;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.07);
     padding: 1.25rem;
@@ -29,31 +39,52 @@ svg {
 }
  /* Basic Styling */
 .department-area {
-    fill: #e9ecef; 
-    stroke: #ced4da;
+    fill: var(--beige);
+    stroke: var(--light-brown);
     stroke-width: 0.0625rem;
-    rx: 6px; 
+    rx: 6px;
 }
 .department-label {
-    font-size: 0.5rem; 
+    font-size: 0.5rem;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 600; 
-    fill: #343a40; 
+    font-weight: 600;
+    fill: var(--black);
     text-anchor: middle;
+    text-transform: uppercase;
 }
 .conveyor-belt {
-    fill: #adb5bd; 
+    fill: var(--light-brown);
     rx: 2px;
 }
 .conveyor-lines {
-    stroke: #dee2e6; 
+    stroke: var(--beige);
     stroke-dasharray: 2, 2;
     animation: conveyorLinesMove 0.5s linear infinite;
 }
-.vertical-conveyor-lines { 
-    stroke: #dee2e6;
+.vertical-conveyor-lines {
+    stroke: var(--beige);
     stroke-dasharray: 2, 2;
     animation: conveyorLinesMoveVertical 0.5s linear infinite;
+}
+
+.icon {
+    fill: var(--black);
+    transition: fill 0.3s;
+}
+
+.icon-working {
+    animation: iconPulse 6s linear infinite;
+}
+
+@keyframes iconPulse {
+    0%, 80% {
+        fill: var(--black);
+        filter: none;
+    }
+    50% {
+        fill: var(--deep-red);
+        filter: drop-shadow(0 0 5px var(--deep-red));
+    }
 }
 
 /* Wood Line Specific Shapes & Colors */
@@ -72,8 +103,16 @@ svg {
 .raw-electronics-components rect { fill: #2196F3; stroke: #0D47A1; stroke-width: 0.2px;}
 .assembled-electronics-module { fill: #212529; stroke: #000000; stroke-width: 0.5px; }
  /* Final Product & QA */
-.finished-guitar-silhouette { fill: #BB854B; stroke: #010101; stroke-width:0.5px; }
-.qa-pass-indicator { fill: #22C55E; /* Green */ animation: qaPulse 1.5s ease-in-out 3; /* Pulse 3 times, slower */ opacity: 0; }
+.finished-guitar-silhouette {
+    fill: var(--light-brown);
+    stroke: var(--black);
+    stroke-width: 0.5px;
+}
+.qa-pass-indicator {
+    fill: #22C55E;
+    animation: qaPulse 1.5s ease-in-out 3;
+    opacity: 0;
+}
   @keyframes conveyorLinesMove { to { stroke-dashoffset: -4; } }
 @keyframes conveyorLinesMoveVertical { to { stroke-dashoffset: -4; } }
 @keyframes qaPulse {
