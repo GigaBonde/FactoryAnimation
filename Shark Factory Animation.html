@@ -117,12 +117,13 @@
         /* --- Department Icon 'Working' Animation --- */
         /* Generic pulse animation for when a department is active. */
         @keyframes departmentActivePulse {
-            0%, 100% {
+            0% {
                 transform: scale(1.0);
                 stroke: #010101; /* Black - new base stroke */
                 fill: #CEA67D;   /* Beige - new base fill */
                 stroke-width: 0.75px; /* new base stroke-width */
                 filter: none; /* Remove glow when not active */
+                opacity: 1; /* Ensure icon is visible */
             }
             50% {
                 transform: scale(1.1);
@@ -130,6 +131,15 @@
                 fill: #BB854B;   /* Light Brown - active fill */
                 stroke-width: 1px; /* Slightly thicker stroke for active state */
                 filter: drop-shadow(0px 0px 3px #A02128); /* Deep Red glow */
+                opacity: 1; /* Ensure icon is visible */
+            }
+            100% {
+                transform: scale(1.0);
+                stroke: #010101; /* Black - new base stroke */
+                fill: #CEA67D;   /* Beige - new base fill */
+                stroke-width: 0.75px; /* new base stroke-width */
+                filter: none; /* Remove glow when not active */
+                opacity: 1; /* Ensure icon is visible */
             }
         }
 
@@ -146,54 +156,54 @@
             /* Base properties for multi-animation setup */
             animation-duration: 1s; /* Duration of each pulse */
             animation-iteration-count: 1; /* Each pulse runs once */
-            animation-fill-mode: forwards; /* Holds the 100% state of the pulse (back to normal) */
+            animation-fill-mode: backwards; /* Apply 0% styles before animation starts */
         }
 
         .wood-proc-dept-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 2.4s, 8.4s, 14.4s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 2.4s, 7.4s, 12.4s, 17.4s, 22.4s, 27.4s;
         }
         .robotic-sanding-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 7.8s, 13.8s, 19.8s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 7.8s, 12.8s, 17.8s, 22.8s, 27.8s, 32.8s;
         }
         .robotic-painting-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 11.4s, 17.4s, 23.4s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 11.4s, 16.4s, 21.4s, 26.4s, 31.4s, 36.4s;
         }
         .robotic-polishing-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 18.0s, 24.0s, 30.0s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 18.0s, 23.0s, 28.0s, 33.0s, 38.0s, 43.0s;
         }
         .metal-proc-dept-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 3.5s, 9.5s, 15.5s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 3.5s, 8.5s, 13.5s, 18.5s, 23.5s, 28.5s;
         }
         .surface-proc-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 8.5s, 14.5s, 20.5s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 8.5s, 13.5s, 18.5s, 23.5s, 28.5s, 33.5s;
         }
         .electronics-assembly-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 4.5s, 10.5s, 16.5s;
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 4.5s, 9.5s, 14.5s, 19.5s, 24.5s, 29.5s;
         }
         .main-assembly-icon {
-            /* Neck (3) + Metal (3) + Electronics (3) = 9 pulses */
+            /* Neck (6) + Metal (6) + Electronics (6) = 18 pulses */
             animation-name:
-                departmentActivePulse, departmentActivePulse, departmentActivePulse, /* Necks */
-                departmentActivePulse, departmentActivePulse, departmentActivePulse, /* Metals */
-                departmentActivePulse, departmentActivePulse, departmentActivePulse; /* Electronics */
-            animation-duration: 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s;
-            animation-iteration-count: 1, 1, 1, 1, 1, 1, 1, 1, 1;
-            animation-fill-mode: forwards, forwards, forwards, forwards, forwards, forwards, forwards, forwards, forwards;
+                departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, /* Necks */
+                departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, /* Metals */
+                departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse; /* Electronics */
+            animation-duration: 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s, 1s;
+            animation-iteration-count: 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1;
+            animation-fill-mode: backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards, backwards;
             animation-delay:
-                24.6s, 30.6s, 36.6s, /* Necks */
-                16.3s, 22.3s, 28.3s, /* Metals */
-                13.95s, 19.95s, 25.95s; /* Electronics */
+                24.6s, 29.6s, 34.6s, 39.6s, 44.6s, 49.6s, /* Necks */
+                16.3s, 21.3s, 26.3s, 31.3s, 36.3s, 41.3s, /* Metals */
+                13.95s, 18.95s, 23.95s, 28.95s, 33.95s, 38.95s; /* Electronics */
         }
         .quality-control-icon {
-            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse;
-            animation-delay: 27.0s, 34.0s, 41.0s; /* For Guitar 1, Guitar 2 (fail), Guitar 3 */
+            animation-name: departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse, departmentActivePulse;
+            animation-delay: 27.0s, 32.0s, 37.0s, 42.0s, 47.0s, 52.0s; /* For all 6 Guitars */
         }
 
         /*
@@ -217,9 +227,13 @@
         /* Overhead feedback conveyor Y: 15px (top of piece) */
         /* Polishing department conveyor Y: 185px (top of piece) */
 
-        .raw-wood-square-1 { animation: rawWoodFlow 30s linear infinite 0s; }
-        .raw-wood-square-2 { animation: rawWoodFlow 30s linear infinite 6s; } 
-        .raw-wood-square-3 { animation: rawWoodFlow 30s linear infinite 12s; }
+        .raw-wood-square-1 { animation: rawWoodFlow 30s linear infinite 0s; animation-fill-mode: backwards; }
+        .raw-wood-square-2 { animation: rawWoodFlow 30s linear infinite 5s; animation-fill-mode: backwards; }
+        .raw-wood-square-3 { animation: rawWoodFlow 30s linear infinite 10s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .raw-wood-square-4 { animation: rawWoodFlow 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .raw-wood-square-5 { animation: rawWoodFlow 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .raw-wood-square-6 { animation: rawWoodFlow 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes rawWoodFlow { 
             0% { transform: translate(30px, 85px); opacity: 0; } /* Starts invisible at raw wood input (X=30, Y=85) */
             1% { transform: translate(30px, 85px); opacity: 1; } /* Becomes visible at raw wood input */
@@ -228,9 +242,13 @@
             100% { opacity: 0; transform: translate(190px, 85px); } /* Stays invisible */
         }
 
-        .processed-wood-triangle-1 { animation: processedWoodToSanding 30s linear infinite 0s; }
-        .processed-wood-triangle-2 { animation: processedWoodToSanding 30s linear infinite 6s; }
-        .processed-wood-triangle-3 { animation: processedWoodToSanding 30s linear infinite 12s; }
+        .processed-wood-triangle-1 { animation: processedWoodToSanding 30s linear infinite 0s; animation-fill-mode: backwards; }
+        .processed-wood-triangle-2 { animation: processedWoodToSanding 30s linear infinite 5s; animation-fill-mode: backwards; }
+        .processed-wood-triangle-3 { animation: processedWoodToSanding 30s linear infinite 10s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .processed-wood-triangle-4 { animation: processedWoodToSanding 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .processed-wood-triangle-5 { animation: processedWoodToSanding 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .processed-wood-triangle-6 { animation: processedWoodToSanding 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes processedWoodToSanding { 
             0%    { transform: translate(290px, 85px); opacity: 0; } /* Starts invisible after Wood Proc. (X=290, Y=85) */
             9%   { transform: translate(290px, 85px); opacity: 0; } /* Remains invisible, waiting for processing time */
@@ -243,9 +261,13 @@
             100%  { opacity: 0; transform: translate(450px, 85px); } /* Stays invisible */
         }
         
-        .sanded-neck-assembly-triangle-1 { animation: sandedWoodToPainting 30s linear infinite 0s; }
-        .sanded-neck-assembly-triangle-2 { animation: sandedWoodToPainting 30s linear infinite 6s; }
-        .sanded-neck-assembly-triangle-3 { animation: sandedWoodToPainting 30s linear infinite 12s; }
+        .sanded-neck-assembly-triangle-1 { animation: sandedWoodToPainting 30s linear infinite 0s; animation-fill-mode: backwards; }
+        .sanded-neck-assembly-triangle-2 { animation: sandedWoodToPainting 30s linear infinite 5s; animation-fill-mode: backwards; }
+        .sanded-neck-assembly-triangle-3 { animation: sandedWoodToPainting 30s linear infinite 10s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .sanded-neck-assembly-triangle-4 { animation: sandedWoodToPainting 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .sanded-neck-assembly-triangle-5 { animation: sandedWoodToPainting 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .sanded-neck-assembly-triangle-6 { animation: sandedWoodToPainting 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes sandedWoodToPainting { 
             0% { transform: translate(550px, 85px); opacity: 0; } /* Starts invisible after 1st Sanding (X=550, Y=85) */
             27% { transform: translate(550px, 85px); opacity: 0; } /* Remains invisible, waiting for sanding time */
@@ -255,9 +277,13 @@
             100% { opacity: 0; transform: translate(690px, 85px); } /* Stays invisible */
         }
 
-        .painted-neck-assembly-triangle-1 { animation: paintedWoodToPolishingDept 30s linear infinite 0s; }
-        .painted-neck-assembly-triangle-2 { animation: paintedWoodToPolishingDept 30s linear infinite 6s; }
-        .painted-neck-assembly-triangle-3 { animation: paintedWoodToPolishingDept 30s linear infinite 12s; }
+        .painted-neck-assembly-triangle-1 { animation: paintedWoodToPolishingDept 30s linear infinite 0s; animation-fill-mode: backwards; }
+        .painted-neck-assembly-triangle-2 { animation: paintedWoodToPolishingDept 30s linear infinite 5s; animation-fill-mode: backwards; }
+        .painted-neck-assembly-triangle-3 { animation: paintedWoodToPolishingDept 30s linear infinite 10s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .painted-neck-assembly-triangle-4 { animation: paintedWoodToPolishingDept 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .painted-neck-assembly-triangle-5 { animation: paintedWoodToPolishingDept 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .painted-neck-assembly-triangle-6 { animation: paintedWoodToPolishingDept 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes paintedWoodToPolishingDept { 
             0%    { transform: translate(790px, 85px); opacity: 0; } /* Starts invisible after Painting (X=790, Y=85) */
             40%   { transform: translate(790px, 85px); opacity: 0; } /* Remains invisible, waiting for painting time */
@@ -269,9 +295,13 @@
             100%  { opacity: 0; transform: translate(510px, 185px); } /* Stays invisible */
         }
 
-        .polished-neck-assembly-triangle-1 { animation: polishedNeckToAssembly 30s linear infinite 0s; }
-        .polished-neck-assembly-triangle-2 { animation: polishedNeckToAssembly 30s linear infinite 6s; }
-        .polished-neck-assembly-triangle-3 { animation: polishedNeckToAssembly 30s linear infinite 12s; }
+        .polished-neck-assembly-triangle-1 { animation: polishedNeckToAssembly 30s linear infinite 0s; animation-fill-mode: backwards; }
+        .polished-neck-assembly-triangle-2 { animation: polishedNeckToAssembly 30s linear infinite 5s; animation-fill-mode: backwards; }
+        .polished-neck-assembly-triangle-3 { animation: polishedNeckToAssembly 30s linear infinite 10s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .polished-neck-assembly-triangle-4 { animation: polishedNeckToAssembly 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .polished-neck-assembly-triangle-5 { animation: polishedNeckToAssembly 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .polished-neck-assembly-triangle-6 { animation: polishedNeckToAssembly 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes polishedNeckToAssembly { 
             0% { transform: translate(620px, 185px); opacity: 0; } /* Starts invisible after Polishing (X=620, Y=185) */
             62% { transform: translate(620px, 185px); opacity: 0; } /* Remains invisible, waiting for polishing time */
@@ -287,9 +317,13 @@
 
         /* --- Metal Processing Line Animations --- */
         /* Conveyor Y for metal line: 285px */
-        .raw-metal-square-1 { animation: rawMetalFlowNewY 30s linear infinite 0.5s; }
-        .raw-metal-square-2 { animation: rawMetalFlowNewY 30s linear infinite 6.5s; }
-        .raw-metal-square-3 { animation: rawMetalFlowNewY 30s linear infinite 12.5s; }
+        .raw-metal-square-1 { animation: rawMetalFlowNewY 30s linear infinite 0.5s; animation-fill-mode: backwards; }
+        .raw-metal-square-2 { animation: rawMetalFlowNewY 30s linear infinite 5.5s; animation-fill-mode: backwards; }
+        .raw-metal-square-3 { animation: rawMetalFlowNewY 30s linear infinite 10.5s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .raw-metal-square-4 { animation: rawMetalFlowNewY 30s linear infinite 15.5s; animation-fill-mode: backwards; }
+        .raw-metal-square-5 { animation: rawMetalFlowNewY 30s linear infinite 20.5s; animation-fill-mode: backwards; }
+        .raw-metal-square-6 { animation: rawMetalFlowNewY 30s linear infinite 25.5s; animation-fill-mode: backwards; }
         @keyframes rawMetalFlowNewY { 
             0% { transform: translate(30px, 285px); opacity: 0; } /* Starts invisible at raw metal input (X=30, Y=285) */
             1% { transform: translate(30px, 285px); opacity: 1; } /* Becomes visible at raw metal input */
@@ -298,9 +332,13 @@
             100% { opacity: 0; transform: translate(190px, 285px); } /* Stays invisible */
         }
 
-        .metal-spine-rect-1 { animation: metalSpineJoinsWood 30s linear infinite 0.5s; }
-        .metal-spine-rect-2 { animation: metalSpineJoinsWood 30s linear infinite 6.5s; }
-        .metal-spine-rect-3 { animation: metalSpineJoinsWood 30s linear infinite 12.5s; }
+        .metal-spine-rect-1 { animation: metalSpineJoinsWood 30s linear infinite 0.5s; animation-fill-mode: backwards; }
+        .metal-spine-rect-2 { animation: metalSpineJoinsWood 30s linear infinite 5.5s; animation-fill-mode: backwards; }
+        .metal-spine-rect-3 { animation: metalSpineJoinsWood 30s linear infinite 10.5s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS */
+        .metal-spine-rect-4 { animation: metalSpineJoinsWood 30s linear infinite 15.5s; animation-fill-mode: backwards; }
+        .metal-spine-rect-5 { animation: metalSpineJoinsWood 30s linear infinite 20.5s; animation-fill-mode: backwards; }
+        .metal-spine-rect-6 { animation: metalSpineJoinsWood 30s linear infinite 25.5s; animation-fill-mode: backwards; }
         @keyframes metalSpineJoinsWood { 
             0%    { transform: translate(290px, 285px); opacity: 0; } /* Starts invisible after Metal Proc. (X=290, Y=285) */
             12%   { transform: translate(290px, 285px); opacity: 0; } /* Remains invisible, waiting for processing time */
@@ -314,9 +352,13 @@
         }
 
         /* This animation is for other metal hardware, not the spine that joins the wood. */
-        .processed-metal-hardware-triangle-1 { animation: processedMetalToSurfaceNewY 30s linear infinite 1s; }
-        .processed-metal-hardware-triangle-2 { animation: processedMetalToSurfaceNewY 30s linear infinite 7s; }
-        .processed-metal-hardware-triangle-3 { animation: processedMetalToSurfaceNewY 30s linear infinite 13s; }
+        .processed-metal-hardware-triangle-1 { animation: processedMetalToSurfaceNewY 30s linear infinite 1s; animation-fill-mode: backwards; } /* Base delay 1s, was 1s */
+        .processed-metal-hardware-triangle-2 { animation: processedMetalToSurfaceNewY 30s linear infinite 6s; animation-fill-mode: backwards; } /* Base delay 1s + 5s = 6s, was 7s */
+        .processed-metal-hardware-triangle-3 { animation: processedMetalToSurfaceNewY 30s linear infinite 11s; animation-fill-mode: backwards; }/* Base delay 1s + 10s = 11s, was 13s */
+        /* ADDED FOR 6 PARTS */
+        .processed-metal-hardware-triangle-4 { animation: processedMetalToSurfaceNewY 30s linear infinite 16s; animation-fill-mode: backwards; }/* Base delay 1s + 15s = 16s */
+        .processed-metal-hardware-triangle-5 { animation: processedMetalToSurfaceNewY 30s linear infinite 21s; animation-fill-mode: backwards; }/* Base delay 1s + 20s = 21s */
+        .processed-metal-hardware-triangle-6 { animation: processedMetalToSurfaceNewY 30s linear infinite 26s; animation-fill-mode: backwards; }/* Base delay 1s + 25s = 26s */
         @keyframes processedMetalToSurfaceNewY { 
             0% { transform: translate(290px, 285px); opacity: 0; } /* Starts invisible after Metal Proc. (X=290, Y=285) */
             12% { transform: translate(290px, 285px); opacity: 0; } /* Remains invisible, waiting for processing time (slightly different from spine) */
@@ -326,9 +368,13 @@
             100% { opacity: 0; transform: translate(450px, 285px); } /* Stays invisible */
         }
         
-        .finished-metal-hardware-triangle-1 { animation: finishedMetalToAssemblyNewY 30s linear infinite 1s; }
-        .finished-metal-hardware-triangle-2 { animation: finishedMetalToAssemblyNewY 30s linear infinite 7s; }
-        .finished-metal-hardware-triangle-3 { animation: finishedMetalToAssemblyNewY 30s linear infinite 13s; }
+        .finished-metal-hardware-triangle-1 { animation: finishedMetalToAssemblyNewY 30s linear infinite 1s; animation-fill-mode: backwards; } /* Base delay 1s */
+        .finished-metal-hardware-triangle-2 { animation: finishedMetalToAssemblyNewY 30s linear infinite 6s; animation-fill-mode: backwards; } /* Base delay 1s + 5s */
+        .finished-metal-hardware-triangle-3 { animation: finishedMetalToAssemblyNewY 30s linear infinite 11s; animation-fill-mode: backwards; }/* Base delay 1s + 10s */
+        /* ADDED FOR 6 PARTS */
+        .finished-metal-hardware-triangle-4 { animation: finishedMetalToAssemblyNewY 30s linear infinite 16s; animation-fill-mode: backwards; }/* Base delay 1s + 15s */
+        .finished-metal-hardware-triangle-5 { animation: finishedMetalToAssemblyNewY 30s linear infinite 21s; animation-fill-mode: backwards; }/* Base delay 1s + 20s */
+        .finished-metal-hardware-triangle-6 { animation: finishedMetalToAssemblyNewY 30s linear infinite 26s; animation-fill-mode: backwards; }/* Base delay 1s + 25s */
         @keyframes finishedMetalToAssemblyNewY { 
             0% { transform: translate(550px, 285px); opacity: 0; } /* Starts invisible after Surface Proc. (X=550, Y=285) */
             27% { transform: translate(550px, 285px); opacity: 0; } /* Remains invisible, waiting for surface processing time */
@@ -342,9 +388,13 @@
 
         /* --- Electronics Line Animations --- */
         /* Conveyor Y for electronics line: 405px */
-        .raw-electronics-components-1 { animation: rawElectronicsFlow 30s linear infinite 1.5s; }
-        .raw-electronics-components-2 { animation: rawElectronicsFlow 30s linear infinite 7.5s; }
-        .raw-electronics-components-3 { animation: rawElectronicsFlow 30s linear infinite 13.5s; }
+        .raw-electronics-components-1 { animation: rawElectronicsFlow 30s linear infinite 1.5s; animation-fill-mode: backwards; } /* Base delay 1.5s */
+        .raw-electronics-components-2 { animation: rawElectronicsFlow 30s linear infinite 6.5s; animation-fill-mode: backwards; } /* Base delay 1.5s + 5s */
+        .raw-electronics-components-3 { animation: rawElectronicsFlow 30s linear infinite 11.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 10s */
+        /* ADDED FOR 6 PARTS */
+        .raw-electronics-components-4 { animation: rawElectronicsFlow 30s linear infinite 16.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 15s */
+        .raw-electronics-components-5 { animation: rawElectronicsFlow 30s linear infinite 21.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 20s */
+        .raw-electronics-components-6 { animation: rawElectronicsFlow 30s linear infinite 26.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 25s */
         @keyframes rawElectronicsFlow {
             0% { transform: translate(30px, 405px); opacity: 0; } /* Starts invisible at raw electronics input (X=30, Y=405) */
             1% { transform: translate(30px, 405px); opacity: 1; } /* Becomes visible at raw electronics input */
@@ -353,9 +403,13 @@
             100% { opacity: 0; transform: translate(190px, 405px); } /* Stays invisible */
         }
 
-        .assembled-electronics-module-1 { animation: assembledElectronicsToAssembly 30s linear infinite 1.5s; }
-        .assembled-electronics-module-2 { animation: assembledElectronicsToAssembly 30s linear infinite 7.5s; }
-        .assembled-electronics-module-3 { animation: assembledElectronicsToAssembly 30s linear infinite 13.5s; }
+        .assembled-electronics-module-1 { animation: assembledElectronicsToAssembly 30s linear infinite 1.5s; animation-fill-mode: backwards; } /* Base delay 1.5s */
+        .assembled-electronics-module-2 { animation: assembledElectronicsToAssembly 30s linear infinite 6.5s; animation-fill-mode: backwards; } /* Base delay 1.5s + 5s */
+        .assembled-electronics-module-3 { animation: assembledElectronicsToAssembly 30s linear infinite 11.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 10s */
+        /* ADDED FOR 6 PARTS */
+        .assembled-electronics-module-4 { animation: assembledElectronicsToAssembly 30s linear infinite 16.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 15s */
+        .assembled-electronics-module-5 { animation: assembledElectronicsToAssembly 30s linear infinite 21.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 20s */
+        .assembled-electronics-module-6 { animation: assembledElectronicsToAssembly 30s linear infinite 26.5s; animation-fill-mode: backwards; }/* Base delay 1.5s + 25s */
         @keyframes assembledElectronicsToAssembly {
             0% { transform: translate(290px, 405px); opacity: 0; } /* Starts invisible after Electronics Assembly (X=290, Y=405) */
             12% { transform: translate(290px, 405px); opacity: 0; } /* Remains invisible, waiting for assembly time */
@@ -370,10 +424,13 @@
         }
         
         /* --- Final Product and QA Animations --- */
-        .finished-guitar-silhouette-1 { animation: finalGuitarFlow 30s linear infinite 0s; }
-        /* MODIFIED: Second guitar uses finalGuitarFlowFail animation */
-        .finished-guitar-silhouette-2 { animation: finalGuitarFlowFail 30s linear infinite 7s; }
-        .finished-guitar-silhouette-3 { animation: finalGuitarFlow 30s linear infinite 14s; }
+        .finished-guitar-silhouette-1 { animation: finalGuitarFlow 30s linear infinite 0s; animation-fill-mode: backwards; }
+        .finished-guitar-silhouette-2 { animation: finalGuitarFlow 30s linear infinite 5s; animation-fill-mode: backwards; }
+        .finished-guitar-silhouette-3 { animation: finalGuitarFlow 30s linear infinite 10s; animation-fill-mode: backwards; }
+        /* ADDED FOR 6 PARTS - instances 4,5,6 fail QA */
+        .finished-guitar-silhouette-4 { animation: finalGuitarFlowFail 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .finished-guitar-silhouette-5 { animation: finalGuitarFlowFail 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .finished-guitar-silhouette-6 { animation: finalGuitarFlowFail 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes finalGuitarFlow {
             /* MODIFIED: Guitar appearance delayed until Polished Neck (latest part) arrives at 82% and is processed by 83% */
             0%   , 82% { transform: translate(830px, 285px) scale(0.6); opacity: 0; } /* Stays invisible until all parts are assembled */
@@ -396,10 +453,13 @@
             100% { transform: translate(930px, 285px) scale(0.6); opacity: 0; } /* Stays faded at QA station */
         }
 
-        .qa-pass-indicator-1 { animation: qaPassAnim 30s linear infinite 0s; }
-        /* MODIFIED: Second guitar's pass indicator is disabled */
-        .qa-pass-indicator-2 { animation: none; opacity: 0; }
-        .qa-pass-indicator-3 { animation: qaPassAnim 30s linear infinite 14s; }
+        .qa-pass-indicator-1 { animation: qaPassAnim 30s linear infinite 0s; } /* Corresponds to Guitar 1 (delay 0s) */
+        .qa-pass-indicator-2 { animation: qaPassAnim 30s linear infinite 5s; } /* Corresponds to Guitar 2 (delay 5s) */
+        .qa-pass-indicator-3 { animation: qaPassAnim 30s linear infinite 10s; }/* Corresponds to Guitar 3 (delay 10s) */
+        /* Guitars 4, 5, 6 will fail QA, so their pass indicators should always be hidden */
+        .qa-pass-indicator-4,
+        .qa-pass-indicator-5,
+        .qa-pass-indicator-6 { animation: none; opacity: 0; }
         @keyframes qaPassAnim {
             /* MODIFIED: QA pulse timing adjusted to new guitar timing at QA station (approx 90% to 92%) */
             0%, 90.5% { opacity: 0; r:0; }      /* Indicator invisible until guitar is at QA station */
@@ -413,7 +473,14 @@
         }
 
         /* Animation for QA Fail indicator pulse */
-        .qa-fail-indicator-2 { animation: qaFailPulseAnim 30s linear infinite 7s; }
+        /* OLD LOGIC: .qa-fail-indicator-2 { animation: qaFailPulseAnim 30s linear infinite 7s; } */
+        /* MODIFIED: Disable old fail indicator for guitar 2 as it now passes */
+        .qa-fail-indicator-2 { animation: none; opacity: 0; }
+
+        /* NEW LOGIC: Guitars 4, 5, 6 fail QA */
+        .qa-fail-indicator-4 { animation: qaFailPulseAnim 30s linear infinite 15s; animation-fill-mode: backwards; }
+        .qa-fail-indicator-5 { animation: qaFailPulseAnim 30s linear infinite 20s; animation-fill-mode: backwards; }
+        .qa-fail-indicator-6 { animation: qaFailPulseAnim 30s linear infinite 25s; animation-fill-mode: backwards; }
         @keyframes qaFailPulseAnim {
             /* Timed to activate when the second guitar (failed one) is at QA station */
             /* Guitar is at QA from 90% to 92% in its 'finalGuitarFlowFail' animation */
@@ -505,41 +572,76 @@
                    but with an increased 'animation-delay' (e.g., previous delay + 6s for a 6-second stagger):
                    .raw-wood-square-4 { animation: rawWoodFlow 30s linear infinite 18s; }
             -->
+                   .raw-wood-square-4 { animation: rawWoodFlow 30s linear infinite 18s; }
+            -->
             <rect class="raw-wood-square-1 moving-part-shadow" width="20" height="20" rx="2"/>
             <rect class="raw-wood-square-2 moving-part-shadow" width="20" height="20" rx="2"/>
             <rect class="raw-wood-square-3 moving-part-shadow" width="20" height="20" rx="2"/>
+            <rect class="raw-wood-square-4 moving-part-shadow" width="20" height="20" rx="2"/>
+            <rect class="raw-wood-square-5 moving-part-shadow" width="20" height="20" rx="2"/>
+            <rect class="raw-wood-square-6 moving-part-shadow" width="20" height="20" rx="2"/>
             <polygon class="processed-wood-triangle-1 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="processed-wood-triangle-2 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="processed-wood-triangle-3 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="processed-wood-triangle-4 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="processed-wood-triangle-5 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="processed-wood-triangle-6 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="sanded-neck-assembly-triangle-1 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="sanded-neck-assembly-triangle-2 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="sanded-neck-assembly-triangle-3 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="sanded-neck-assembly-triangle-4 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="sanded-neck-assembly-triangle-5 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="sanded-neck-assembly-triangle-6 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="painted-neck-assembly-triangle-1 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="painted-neck-assembly-triangle-2 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="painted-neck-assembly-triangle-3 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="painted-neck-assembly-triangle-4 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="painted-neck-assembly-triangle-5 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="painted-neck-assembly-triangle-6 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="polished-neck-assembly-triangle-1 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="polished-neck-assembly-triangle-2 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="polished-neck-assembly-triangle-3 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="polished-neck-assembly-triangle-4 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="polished-neck-assembly-triangle-5 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="polished-neck-assembly-triangle-6 moving-part-shadow" points="0,20 10,0 20,20" />
             
             <rect class="raw-metal-square-1 moving-part-shadow" width="20" height="20" rx="2"/>
             <rect class="raw-metal-square-2 moving-part-shadow" width="20" height="20" rx="2"/>
             <rect class="raw-metal-square-3 moving-part-shadow" width="20" height="20" rx="2"/>
+            <rect class="raw-metal-square-4 moving-part-shadow" width="20" height="20" rx="2"/>
+            <rect class="raw-metal-square-5 moving-part-shadow" width="20" height="20" rx="2"/>
+            <rect class="raw-metal-square-6 moving-part-shadow" width="20" height="20" rx="2"/>
             <polygon class="processed-metal-hardware-triangle-1 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="processed-metal-hardware-triangle-2 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="processed-metal-hardware-triangle-3 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="processed-metal-hardware-triangle-4 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="processed-metal-hardware-triangle-5 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="processed-metal-hardware-triangle-6 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="finished-metal-hardware-triangle-1 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="finished-metal-hardware-triangle-2 moving-part-shadow" points="0,20 10,0 20,20" />
             <polygon class="finished-metal-hardware-triangle-3 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="finished-metal-hardware-triangle-4 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="finished-metal-hardware-triangle-5 moving-part-shadow" points="0,20 10,0 20,20" />
+            <polygon class="finished-metal-hardware-triangle-6 moving-part-shadow" points="0,20 10,0 20,20" />
             <rect class="metal-spine-rect-1 moving-part-shadow" width="5" height="25" rx="1"/>
             <rect class="metal-spine-rect-2 moving-part-shadow" width="5" height="25" rx="1"/>
             <rect class="metal-spine-rect-3 moving-part-shadow" width="5" height="25" rx="1"/>
+            <rect class="metal-spine-rect-4 moving-part-shadow" width="5" height="25" rx="1"/>
+            <rect class="metal-spine-rect-5 moving-part-shadow" width="5" height="25" rx="1"/>
+            <rect class="metal-spine-rect-6 moving-part-shadow" width="5" height="25" rx="1"/>
 
             <g class="raw-electronics-components-1 moving-part-shadow" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
             <g class="raw-electronics-components-2 moving-part-shadow" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
             <g class="raw-electronics-components-3 moving-part-shadow" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
+            <g class="raw-electronics-components-4 moving-part-shadow" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
+            <g class="raw-electronics-components-5 moving-part-shadow" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
+            <g class="raw-electronics-components-6 moving-part-shadow" transform="scale(0.8)"><circle cx="5" cy="5" r="3"/><rect x="10" y="2" width="6" height="6" rx="1"/></g>
             <rect class="assembled-electronics-module-1 moving-part-shadow" width="20" height="12" rx="2"/>
             <rect class="assembled-electronics-module-2 moving-part-shadow" width="20" height="12" rx="2"/>
             <rect class="assembled-electronics-module-3 moving-part-shadow" width="20" height="12" rx="2"/>
+            <rect class="assembled-electronics-module-4 moving-part-shadow" width="20" height="12" rx="2"/>
+            <rect class="assembled-electronics-module-5 moving-part-shadow" width="20" height="12" rx="2"/>
+            <rect class="assembled-electronics-module-6 moving-part-shadow" width="20" height="12" rx="2"/>
 
 
             <g class="finished-guitar-silhouette-1 moving-part-shadow">
@@ -551,11 +653,26 @@
             <g class="finished-guitar-silhouette-3 moving-part-shadow">
                  <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
             </g>
+            <g class="finished-guitar-silhouette-4 moving-part-shadow">
+                 <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
+            </g>
+            <g class="finished-guitar-silhouette-5 moving-part-shadow">
+                 <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
+            </g>
+            <g class="finished-guitar-silhouette-6 moving-part-shadow">
+                 <polygon points="10,0 20,30 0,30" /> <rect x="8" y="30" width="4" height="20" />
+            </g>
             
             <circle class="qa-pass-indicator-1" cx="1050" cy="295" r="0"/>
-            <circle class="qa-pass-indicator-2" cx="1050" cy="295" r="0"/> <!-- Pass indicator for 2nd guitar, now disabled in CSS -->
-            <circle class="qa-fail-indicator qa-fail-indicator-2" cx="1050" cy="280" r="0"/> <!-- Fail indicator for 2nd guitar, positioned slightly above -->
+            <circle class="qa-pass-indicator-2" cx="1050" cy="295" r="0"/>
             <circle class="qa-pass-indicator-3" cx="1050" cy="295" r="0"/>
+            <circle class="qa-pass-indicator-4" cx="1050" cy="295" r="0"/>
+            <circle class="qa-pass-indicator-5" cx="1050" cy="295" r="0"/>
+            <circle class="qa-pass-indicator-6" cx="1050" cy="295" r="0"/>
+            <circle class="qa-fail-indicator qa-fail-indicator-2" cx="1050" cy="280" r="0"/> <!-- Fail indicator for 2nd guitar (OLD LOGIC - now disabled in CSS) -->
+            <circle class="qa-fail-indicator qa-fail-indicator-4" cx="1050" cy="280" r="0"/>
+            <circle class="qa-fail-indicator qa-fail-indicator-5" cx="1050" cy="280" r="0"/>
+            <circle class="qa-fail-indicator qa-fail-indicator-6" cx="1050" cy="280" r="0"/>
 
 
             <text x="50" y="25" class="department-label">RAW WOOD IN</text>
